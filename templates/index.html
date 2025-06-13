@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perplexity Prompt</title>
+</head>
+<body>
+    <h2>Ask Perplexity</h2>
+    <form method="POST">
+        <textarea name="prompt" rows="4" cols="60" placeholder="Enter your question..."></textarea><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if result %}
+    <h3>Response:</h3>
+    <pre>{{ result }}</pre>
+    {% endif %}
+</body>
+</html>
+
