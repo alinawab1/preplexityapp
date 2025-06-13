@@ -1,19 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Perplexity Prompt</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perplexity AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h2>Ask Perplexity</h2>
-    <form method="POST">
-        <textarea name="prompt" rows="4" cols="60" placeholder="Enter your question..."></textarea><br><br>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="container">
+        <header class="header">
+            <h1>Perplexity AI</h1>
+            <p class="subtitle">Ask intelligent questions, get precise answers</p>
+        </header>
 
-    {% if result %}
-    <h3>Response:</h3>
-    <pre>{{ result }}</pre>
-    {% endif %}
+        <main class="main-content">
+            <form method="POST" class="query-form" id="queryForm">
+                <div class="form-group">
+                    <label for="prompt">Your Question</label>
+                    <textarea 
+                        id="prompt"
+                        name="prompt" 
+                        rows="4" 
+                        placeholder="What would you like to know?"
+                        required
+                    ></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Get Answer</span>
+                </button>
+            </form>
+
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Processing your question...</p>
+            </div>
+
+            {% if result %}
+            <div class="result-section">
+                <h3 class="result-title">Response</h3>
+                <div class="result-content">{{ result|safe }}</div>
+            </div>
+            {% endif %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
-

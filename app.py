@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 import requests
+import markdown
+from markupsafe import Markup
 
 app = Flask(__name__)
 
@@ -27,11 +29,17 @@ def index():
             try:
                 res = requests.post(url, headers=headers, json=payload)
                 res.raise_for_status()
-                output = res.json()['choices'][0]['message']['content']
+                markdown_content = res.json()['choices'][0]['message']['content']
+                # Convert markdown to HTML
+                html_content = markdown.markdown(
+                    markdown_content,
+                    extensions=['fenced_code', 'tables', 'nl2br']
+                )
+                return render_template("index.html", result=output)
             except Exception as e:
-                output = f"Error: {str(e)}"
-    return render_template("index.html", result=output)
+                return render_template("index.html", result=output)
+    
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
-
